@@ -20,6 +20,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import android.media.MediaPlayer;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -118,7 +120,12 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_TASK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Task task = new Task(data.getStringExtra(NewTaskActivity.EXTRA_REPLY));
+            Task task = new Task(data.getStringExtra(NewTaskActivity.EXTRA_REPLY), data.getStringExtra((NewTaskActivity.EXTRA_WEIGHT)));
+            //update task background color depending on weight
+//            if (task.getWeight() == "Hard") {
+//
+//            }
+
             mTaskViewModel.insert(task);
         } else {
             Toast.makeText(

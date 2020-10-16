@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +29,20 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
     public void onBindViewHolder(TaskViewHolder holder, int position) {
         if (mTasks != null) {
             Task current = mTasks.get(position);
-            holder.taskItemView.setText(current.getTask());
+            holder.taskItemView.setText(current.getTask() + " " + current.getWeight());
+            //change background color depending on weight
+            Log.e("TEST", current.getWeight());
+            if (current.getWeight().equals("Hard")) {
+                holder.taskItemView.setBackgroundColor(mInflater.getContext().getResources().getColor(R.color.colorTaskHard));
+            }
+            else if (current.getWeight().equals("Medium")){
+                holder.taskItemView.setBackgroundColor(mInflater.getContext().getResources().getColor(R.color.colorTaskMedium));
+            }
+            else if (current.getWeight().equals("Easy")) {
+                holder.taskItemView.setBackgroundColor(mInflater.getContext().getResources().getColor(R.color.colorTaskEasy));
+                holder.taskItemView.setTextColor(Color.BLACK);
+
+            }
         } else {
             // Covers the case of data not being ready yet.
             holder.taskItemView.setText("No Task");

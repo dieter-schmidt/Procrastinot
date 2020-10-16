@@ -7,4 +7,7 @@
     <color name="colorTextPrimary">@android:color/white</color>
     <color name="colorScreenBackground">#fff3e0</color>
     <color name="colorTextHint">#E0E0E0</color>
+    <color name="colorTaskEasy">#FFFF00</color>
+    <color name="colorTaskMedium">#FFAA00</color>
+    <color name="colorTaskHard">#FF4000</color>
 </resources>

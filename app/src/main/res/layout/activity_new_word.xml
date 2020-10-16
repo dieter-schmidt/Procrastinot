@@ -7,9 +7,15 @@
     android:padding="24dp">
 
     <EditText
-        android:id="@+id/edit_word"
+        android:id="@+id/edit_task"
         style="@style/text_view_style"
         android:hint="@string/hint_task"
+        android:inputType="textAutoComplete" />
+
+    <EditText
+        android:id="@+id/edit_weight"
+        style="@style/text_view_style"
+        android:hint="@string/hint_weight"
         android:inputType="textAutoComplete" />
 
     <Button
