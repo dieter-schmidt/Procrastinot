@@ -15,4 +15,9 @@
     <string name="empty_not_saved">Task not saved because it is empty.</string>
     <string name="clear_all_data">Clear All Data</string>
     <string name="hint_weight">Enter task weight...</string>
+    <string name="hint_type">Enter task type...</string>
+    <string name="task_weight">Task Weight</string>
+    <string name="text_easy">Easy</string>
+    <string name="text_medium">Medium</string>
+    <string name="text_hard">Hard</string>
 </resources>

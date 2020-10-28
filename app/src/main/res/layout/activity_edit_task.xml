@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorScreenBackground"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <EditText
+        android:id="@+id/edit_task"
+        style="@style/text_view_style"
+        android:hint="@string/hint_task"
+        android:inputType="textAutoComplete" />
+
+    <EditText
+        android:id="@+id/edit_weight"
+        style="@style/text_view_style"
+        android:hint="@string/hint_weight"
+        android:inputType="textAutoComplete" />
+
+    <EditText
+        android:id="@+id/edit_type"
+        style="@style/text_view_style"
+        android:hint="@string/hint_type"
+        android:inputType="textAutoComplete" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/task_weight" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radio_easy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/text_easy" />
+
+            <RadioButton
+                android:id="@+id/radio_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/text_medium" />
+
+            <RadioButton
+                android:id="@+id/radio_hard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/text_hard" />
+        </LinearLayout>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/button_save"
+        style="@style/button_style"
+        android:text="@string/button_save" />
+</LinearLayout>

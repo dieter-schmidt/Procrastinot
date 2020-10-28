@@ -27,8 +27,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private TaskViewModel mTaskViewModel;
+    private RecyclerView recyclerView;
 
     public static final int NEW_TASK_ACTIVITY_REQUEST_CODE = 1;
+    public static final int EDIT_TASK_ACTIVITY_REQUEST_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +48,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final TaskListAdapter adapter = new TaskListAdapter(this);
+//        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        recyclerView = findViewById(R.id.recyclerview);
+        final TaskListAdapter adapter = new TaskListAdapter(this, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Task task) {
+                Toast.makeText(getApplicationContext(), "Item Clicked", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, NewTaskActivity.class);
+                startActivityForResult(intent, EDIT_TASK_ACTIVITY_REQUEST_CODE);
+            }
+        });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -84,7 +94,9 @@ public class MainActivity extends AppCompatActivity {
                         // Delete the task
                         mTaskViewModel.deleteTask(myTask);
                     }
+
                 });
+
 
         helper.attachToRecyclerView(recyclerView);
     }
@@ -134,4 +146,5 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
     }
+
 }

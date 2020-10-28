@@ -16,8 +16,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
 
     private final LayoutInflater mInflater;
     private List<Task> mTasks; // Cached copy of words
+    private final OnItemClickListener listener;
 
-    TaskListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
+    TaskListAdapter(Context context, OnItemClickListener listener) {
+        mInflater = LayoutInflater.from(context);
+        this.listener = listener;
+    }
 
     @Override
     public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -30,6 +34,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
         if (mTasks != null) {
             Task current = mTasks.get(position);
             holder.taskItemView.setText(current.getTask() + " " + current.getWeight());
+            bind(current, holder, listener);
             //change background color depending on weight
             Log.e("TEST", current.getWeight());
             if (current.getWeight().equals("Hard")) {
@@ -47,6 +52,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
             // Covers the case of data not being ready yet.
             holder.taskItemView.setText("No Task");
         }
+    }
+
+    public void bind(final Task task, TaskViewHolder holder, final OnItemClickListener listener) {
+        holder.taskItemView.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                listener.onItemClick(task);
+            }
+        });
     }
 
     public Task getTaskAtPosition (int position) {
