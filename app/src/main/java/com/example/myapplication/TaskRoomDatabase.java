@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Task.class}, version = 3, exportSchema = false)
+@Database(entities = {Task.class}, version = 4, exportSchema = false)
 public abstract class TaskRoomDatabase extends RoomDatabase {
 
     public abstract TaskDao taskDao();
@@ -65,7 +65,7 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
             // If we have no tasks, then create the initial list of tasks
             if (mDao.getAnyTask().length < 1) {
                 for (int i = 0; i <= tasks.length - 1; i++) {
-                    Task task = new Task(tasks[i], "medium");
+                    Task task = new Task(tasks[i], "medium", null);
                     mDao.insert(task);
                 }
             }

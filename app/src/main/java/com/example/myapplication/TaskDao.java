@@ -26,4 +26,7 @@ public interface TaskDao {
 
     @Query("SELECT * from task_table LIMIT 1")
     Task[] getAnyTask();
+
+    @Query("SELECT * from task_table WHERE task IN(:taskName)")
+    Task[] getMatchedTasksByName(String taskName);
 }

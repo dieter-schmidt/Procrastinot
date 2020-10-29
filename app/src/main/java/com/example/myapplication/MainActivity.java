@@ -32,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     public static final int NEW_TASK_ACTIVITY_REQUEST_CODE = 1;
     public static final int EDIT_TASK_ACTIVITY_REQUEST_CODE = 2;
 
+    public static final String EXTRA_NAME = "com.example.android.twoactivities.extra.NAME";
+    public static final String EXTRA_TYPE = "com.example.android.twoactivities.extra.TYPE";
+    public static final String EXTRA_WEIGHT = "com.example.android.twoactivities.extra.WEIGHT";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +58,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Task task) {
                 Toast.makeText(getApplicationContext(), "Item Clicked", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(MainActivity.this, NewTaskActivity.class);
+                Intent intent = new Intent(MainActivity.this, EditTaskActivity.class);
+                intent.putExtra(EXTRA_NAME, task.getTask());
+                intent.putExtra(EXTRA_TYPE, task.getType());
+                intent.putExtra(EXTRA_WEIGHT, task.getWeight());
                 startActivityForResult(intent, EDIT_TASK_ACTIVITY_REQUEST_CODE);
             }
         });
@@ -132,14 +139,29 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_TASK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Task task = new Task(data.getStringExtra(NewTaskActivity.EXTRA_REPLY), data.getStringExtra((NewTaskActivity.EXTRA_WEIGHT)));
+            Task task = new Task(data.getStringExtra(NewTaskActivity.EXTRA_REPLY), data.getStringExtra(NewTaskActivity.EXTRA_WEIGHT), data.getStringExtra(NewTaskActivity.EXTRA_TYPE));
             //update task background color depending on weight
 //            if (task.getWeight() == "Hard") {
 //
 //            }
-
             mTaskViewModel.insert(task);
-        } else {
+        }
+        else if (requestCode == EDIT_TASK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            //If task name is the same, update task, otherwise create new
+            Task[] matches = mTaskViewModel.getMatchedTasksByName(data.getStringExtra(EditTaskActivity.EXTRA_NEW_NAME));
+            if (matches.length == 0)
+            {
+                Task task = new Task(data.getStringExtra(EditTaskActivity.EXTRA_NEW_NAME), data.getStringExtra(EditTaskActivity.EXTRA_NEW_WEIGHT), data.getStringExtra(EditTaskActivity.EXTRA_NEW_TYPE));
+                mTaskViewModel.insert(task);
+            }
+            else if (matches.length == 1)
+            {
+                //update existing task with matched name
+
+            }
+            //ALTERNATIVE - UPDATE EVERYTHING
+        }
+        else {
             Toast.makeText(
                     getApplicationContext(),
                     R.string.empty_not_saved,

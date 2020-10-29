@@ -15,12 +15,18 @@ public class Task {
     @ColumnInfo(name = "weight")
     private String mWeight;
 
-    public Task(@NonNull String task, String weight) {
+    @ColumnInfo(name = "type")
+    private String mType;
+
+    public Task(@NonNull String task, String weight, String type) {
         this.mTask = task;
         this.mWeight = weight;
+        this.mType = type;
     }
 
     public String getTask(){return this.mTask;}
 
     public String getWeight(){return this.mWeight;}
+
+    public String getType(){return this.mType;}
 }

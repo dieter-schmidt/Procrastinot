@@ -26,4 +26,6 @@ public class TaskViewModel extends AndroidViewModel {
 
     public void deleteTask(Task task) {mRepository.deleteTask(task);}
 
+    Task[] getMatchedTasksByName(String taskName) {return mRepository.getMatchedTasksByName(taskName);}
+
 }

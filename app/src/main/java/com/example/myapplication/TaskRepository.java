@@ -31,6 +31,11 @@ public class TaskRepository {
     public void deleteTask(Task task)  {
         new deletetaskAsyncTask(mTaskDao).execute(task);
     }
+    Task[] getMatchedTasksByName(String taskName) {
+        getMatchedTasksByNameAsyncTask asyncTask = new getMatchedTasksByNameAsyncTask(mTaskDao);
+        asyncTask.execute(taskName);
+        return asyncTask.matches;
+    }
 
     private static class insertAsyncTask extends AsyncTask<Task, Void, Void> {
 
@@ -43,6 +48,21 @@ public class TaskRepository {
         @Override
         protected Void doInBackground(final Task... params) {
             mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class getMatchedTasksByNameAsyncTask extends AsyncTask<String, Void, Void> {
+        private TaskDao mAsyncTaskDao;
+        Task[] matches;
+
+        getMatchedTasksByNameAsyncTask(TaskDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final String... params) {
+            matches = mAsyncTaskDao.getMatchedTasksByName(params[0]);
             return null;
         }
     }

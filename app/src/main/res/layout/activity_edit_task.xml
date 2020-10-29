@@ -13,12 +13,6 @@
         android:inputType="textAutoComplete" />
 
     <EditText
-        android:id="@+id/edit_weight"
-        style="@style/text_view_style"
-        android:hint="@string/hint_weight"
-        android:inputType="textAutoComplete" />
-
-    <EditText
         android:id="@+id/edit_type"
         style="@style/text_view_style"
         android:hint="@string/hint_type"
@@ -33,13 +27,10 @@
         android:text="@string/task_weight" />
 
     <RadioGroup
+        android:id="@+id/edit_weight_radio_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/radio_easy"
@@ -53,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:checked="true"
                 android:text="@string/text_medium" />
 
             <RadioButton
@@ -61,12 +53,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/text_hard" />
-        </LinearLayout>
+
 
     </RadioGroup>
 
     <Button
-        android:id="@+id/button_save"
+        android:id="@+id/edit_button_save"
         style="@style/button_style"
         android:text="@string/button_save" />
 </LinearLayout>
