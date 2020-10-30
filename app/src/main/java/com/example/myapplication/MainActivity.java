@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_NAME = "com.example.android.twoactivities.extra.NAME";
     public static final String EXTRA_TYPE = "com.example.android.twoactivities.extra.TYPE";
     public static final String EXTRA_WEIGHT = "com.example.android.twoactivities.extra.WEIGHT";
+    public static final String EXTRA_ID = "com.example.android.twoactivities.extra.ID";
+
+    private Task editedTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(EXTRA_NAME, task.getTask());
                 intent.putExtra(EXTRA_TYPE, task.getType());
                 intent.putExtra(EXTRA_WEIGHT, task.getWeight());
+                intent.putExtra(EXTRA_ID, task.getID());
                 startActivityForResult(intent, EDIT_TASK_ACTIVITY_REQUEST_CODE);
             }
         });
@@ -148,18 +152,28 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (requestCode == EDIT_TASK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             //If task name is the same, update task, otherwise create new
-            Task[] matches = mTaskViewModel.getMatchedTasksByName(data.getStringExtra(EditTaskActivity.EXTRA_NEW_NAME));
-            if (matches.length == 0)
-            {
-                Task task = new Task(data.getStringExtra(EditTaskActivity.EXTRA_NEW_NAME), data.getStringExtra(EditTaskActivity.EXTRA_NEW_WEIGHT), data.getStringExtra(EditTaskActivity.EXTRA_NEW_TYPE));
-                mTaskViewModel.insert(task);
-            }
-            else if (matches.length == 1)
-            {
-                //update existing task with matched name
-
-            }
-            //ALTERNATIVE - UPDATE EVERYTHING
+//            Task[] matches = mTaskViewModel.getMatchedTasksByName(data.getStringExtra(EditTaskActivity.EXTRA_NEW_NAME));
+//            if (matches != null)
+//            {
+//                if (matches.length == 0)
+//                {
+//                    Task task = new Task(data.getStringExtra(EditTaskActivity.EXTRA_NEW_NAME), data.getStringExtra(EditTaskActivity.EXTRA_NEW_WEIGHT), data.getStringExtra(EditTaskActivity.EXTRA_NEW_TYPE));
+//                    mTaskViewModel.insert(task);
+//                }
+//                else if (matches.length == 1)
+//                {
+//                    //update existing task with matched name (or changed name)
+//
+//                }
+//                //ALTERNATIVE - UPDATE EVERYTHING
+//            }
+            String name = data.getStringExtra(EditTaskActivity.EXTRA_NEW_NAME);
+            String weight = data.getStringExtra(EditTaskActivity.EXTRA_NEW_WEIGHT);
+            String type = data.getStringExtra(EditTaskActivity.EXTRA_NEW_TYPE);
+            int id = data.getIntExtra(EditTaskActivity.EXTRA_NEW_ID, -1);
+            mTaskViewModel.updateName(id, name);
+            mTaskViewModel.updateWeight(id, weight);
+            mTaskViewModel.updateType(id, type);
         }
         else {
             Toast.makeText(

@@ -29,4 +29,13 @@ public interface TaskDao {
 
     @Query("SELECT * from task_table WHERE task IN(:taskName)")
     Task[] getMatchedTasksByName(String taskName);
+
+    @Query("UPDATE task_table SET task = :taskName WHERE ID = :taskID")
+    void updateName(int taskID, String taskName);
+
+    @Query("UPDATE task_table SET weight = :taskWeight WHERE ID = :taskID")
+    void updateWeight(int taskID, String taskWeight);
+
+    @Query("UPDATE task_table SET type = :taskType WHERE ID = :taskID")
+    void updateType(int taskID, String taskType);
 }

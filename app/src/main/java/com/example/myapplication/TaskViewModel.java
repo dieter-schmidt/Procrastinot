@@ -28,4 +28,11 @@ public class TaskViewModel extends AndroidViewModel {
 
     Task[] getMatchedTasksByName(String taskName) {return mRepository.getMatchedTasksByName(taskName);}
 
+    public void updateName(int taskID, String taskName) {mRepository.updateName(taskID, taskName);}
+
+    public void updateWeight(int taskID, String taskWeight) {mRepository.updateWeight(taskID, taskWeight);}
+
+    public void updateType(int taskID, String taskType) {mRepository.updateType(taskID, taskType);}
+
+
 }

@@ -22,6 +22,25 @@ public class TaskRepository {
         return mAllTasks;
     }
 
+    public void updateName(int taskID, String taskName)
+    {
+        UpdateParams params = new UpdateParams(taskID, taskName);
+        new updateNameAsyncTask(mTaskDao).execute(params);
+        //mTaskDao.updateName(taskID, taskName);
+    }
+    public void updateWeight(int taskID, String taskWeight)
+    {
+        UpdateParams params = new UpdateParams(taskID, taskWeight);
+        new updateWeightAsyncTask(mTaskDao).execute(params);
+        //mTaskDao.updateWeight(taskID, taskWeight);
+    }
+    public void updateType(int taskID, String taskType)
+    {
+        UpdateParams params = new UpdateParams(taskID, taskType);
+        new updateTypeAsyncTask(mTaskDao).execute(params);
+        //mTaskDao.updateType(taskID, taskType);
+    }
+
     public void insert (Task task) {
         new insertAsyncTask(mTaskDao).execute(task);
     }
@@ -67,6 +86,58 @@ public class TaskRepository {
         }
     }
 
+    private static class UpdateParams {
+        int id;
+        String field;
+
+        UpdateParams(int id, String field) {
+            this.id = id;
+            this.field = field;
+        }
+    }
+
+    private static class updateWeightAsyncTask extends AsyncTask<UpdateParams, Void, Void> {
+        private TaskDao mAsyncTaskDao;
+
+        updateWeightAsyncTask(TaskDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final UpdateParams... params) {
+            mAsyncTaskDao.updateWeight(params[0].id, params[0].field);
+            return null;
+        }
+    }
+
+    private static class updateNameAsyncTask extends AsyncTask<UpdateParams, Void, Void> {
+        private TaskDao mAsyncTaskDao;
+
+        updateNameAsyncTask(TaskDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final UpdateParams... params) {
+            mAsyncTaskDao.updateName(params[0].id, params[0].field);
+            return null;
+        }
+    }
+
+    private static class updateTypeAsyncTask extends AsyncTask<UpdateParams, Void, Void> {
+        private TaskDao mAsyncTaskDao;
+
+        updateTypeAsyncTask(TaskDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final UpdateParams... params) {
+            mAsyncTaskDao.updateType(params[0].id, params[0].field);
+            return null;
+        }
+    }
+
     private static class deleteAlltasksAsyncTask extends AsyncTask<Void, Void, Void> {
         private TaskDao mAsyncTaskDao;
 
@@ -94,4 +165,5 @@ public class TaskRepository {
             return null;
         }
     }
+
 }
