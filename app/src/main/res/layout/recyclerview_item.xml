@@ -5,10 +5,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/text_view_style"
-        tools:text="placeholder text" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/text_view_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            tools:text="placeholder text" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/type_view"
+                style="@style/text_view_detail_style"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="12dp"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                tools:text="placeholder text" />
+
+            <TextView
+                android:id="@+id/notes_view"
+                style="@style/text_view_detail_style"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_green_light"
+                android:text="@string/view_notes"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>

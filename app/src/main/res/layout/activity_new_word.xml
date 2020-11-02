@@ -19,7 +19,7 @@
         android:inputType="textAutoComplete" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/weight_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -56,6 +56,28 @@
 
 
     </RadioGroup>
+
+    <EditText
+        android:id="@+id/notes_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/notes_description" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/edit_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/notes_hint"
+            android:inputType="textMultiLine|textAutoComplete" />
+    </ScrollView>
 
     <Button
         android:id="@+id/button_save"

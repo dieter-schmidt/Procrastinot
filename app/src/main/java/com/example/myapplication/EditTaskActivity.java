@@ -20,9 +20,11 @@ public class EditTaskActivity extends AppCompatActivity {
     public static final String EXTRA_NEW_NAME = "com.example.android.myapplication.NEW_NAME";
     public static final String EXTRA_NEW_TYPE = "com.example.android.myapplication.NEW_TYPE";
     public static final String EXTRA_NEW_ID = "com.example.android.myapplication.NEW_ID";
+    public static final String EXTRA_NEW_NOTES = "com.example.android.myapplication.NEW_NOTES";
 
     private EditText mEditTaskView;
     private EditText mEditTypeView;
+    private EditText mEditNotesView;
     private RadioGroup mEditWeightRadioGroup;
     private RadioButton mWeightRadioButton;
 
@@ -33,6 +35,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
         mEditTaskView = findViewById(R.id.edit_task);
         mEditTypeView = findViewById(R.id.edit_type);
+        mEditNotesView = findViewById(R.id.edit_notes);
         mEditWeightRadioGroup = findViewById(R.id.edit_weight_radio_group);
         mEditWeightRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
               @Override
@@ -50,10 +53,12 @@ public class EditTaskActivity extends AppCompatActivity {
         String name = taskData.getString(MainActivity.EXTRA_NAME);
         String type = taskData.getString(MainActivity.EXTRA_TYPE);
         String weight = taskData.getString(MainActivity.EXTRA_WEIGHT);
+        String notes = taskData.getString(MainActivity.EXTRA_NOTES);
         Log.e("BIBBERY", weight);
 
         mEditTaskView.setText(name);
         mEditTypeView.setText(type);
+        mEditNotesView.setText(notes);
         for (int i = 0; i < mEditWeightRadioGroup.getChildCount(); i++)
         {
             Object radioButton = mEditWeightRadioGroup.getChildAt(i);
@@ -77,6 +82,7 @@ public class EditTaskActivity extends AppCompatActivity {
                     setResult(RESULT_CANCELED, replyIntent);
                 } else {
                     String task = mEditTaskView.getText().toString();
+                    String notes = mEditNotesView.getText().toString();
                     String weight;
                     if (mWeightRadioButton != null) {
                         weight = mWeightRadioButton.getText().toString();
@@ -90,6 +96,7 @@ public class EditTaskActivity extends AppCompatActivity {
                     replyIntent.putExtra(EXTRA_NEW_NAME, task);
                     replyIntent.putExtra(EXTRA_NEW_WEIGHT, weight);
                     replyIntent.putExtra(EXTRA_NEW_TYPE, type);
+                    replyIntent.putExtra(EXTRA_NEW_NOTES, notes);
                     replyIntent.putExtra(EXTRA_NEW_ID, id);
                     setResult(RESULT_OK, replyIntent);
                 }

@@ -34,5 +34,7 @@ public class TaskViewModel extends AndroidViewModel {
 
     public void updateType(int taskID, String taskType) {mRepository.updateType(taskID, taskType);}
 
+    public void updateNotes(int taskID, String taskNotes) {mRepository.updateType(taskID, taskNotes);}
+
 
 }

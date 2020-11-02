@@ -33,7 +33,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
     public void onBindViewHolder(TaskViewHolder holder, int position) {
         if (mTasks != null) {
             Task current = mTasks.get(position);
-            holder.taskItemView.setText(current.getTask() + " " + current.getWeight());
+            holder.taskItemView.setText(current.getTask());
+            holder.typeItemView.setText(current.getType());
+            //holder.notesItemView.setText(current.getNotes());
             bind(current, holder, listener);
             //change background color depending on weight
             Log.e("TEST", current.getWeight());
@@ -60,6 +62,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
                 listener.onItemClick(task);
             }
         });
+        holder.notesItemView.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                listener.onNotesClick(task);
+            }
+        });
     }
 
     public Task getTaskAtPosition (int position) {
@@ -82,10 +89,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
 
     class TaskViewHolder extends RecyclerView.ViewHolder {
         private final TextView taskItemView;
+        private final TextView typeItemView;
+        private final TextView notesItemView;
 
         private TaskViewHolder(View itemView) {
             super(itemView);
             taskItemView = itemView.findViewById(R.id.textView);
+            typeItemView = itemView.findViewById(R.id.type_view);
+            notesItemView = itemView.findViewById(R.id.notes_view);
         }
     }
 }

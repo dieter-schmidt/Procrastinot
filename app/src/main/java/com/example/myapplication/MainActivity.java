@@ -18,6 +18,8 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import android.media.MediaPlayer;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_TYPE = "com.example.android.twoactivities.extra.TYPE";
     public static final String EXTRA_WEIGHT = "com.example.android.twoactivities.extra.WEIGHT";
     public static final String EXTRA_ID = "com.example.android.twoactivities.extra.ID";
+    public static final String EXTRA_NOTES = "com.example.android.twoactivities.extra.NOTES";
 
     private Task editedTask;
 
@@ -65,8 +68,13 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(EXTRA_NAME, task.getTask());
                 intent.putExtra(EXTRA_TYPE, task.getType());
                 intent.putExtra(EXTRA_WEIGHT, task.getWeight());
+                intent.putExtra(EXTRA_NOTES, task.getNotes());
                 intent.putExtra(EXTRA_ID, task.getID());
                 startActivityForResult(intent, EDIT_TASK_ACTIVITY_REQUEST_CODE);
+            }
+            public void onNotesClick(Task task) {
+                Toast.makeText(getApplicationContext(), task.getNotes(), Toast.LENGTH_LONG).show();
+                PopupWindow popup = new PopupWindow(50, 50);
             }
         });
         recyclerView.setAdapter(adapter);
@@ -143,7 +151,8 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_TASK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Task task = new Task(data.getStringExtra(NewTaskActivity.EXTRA_REPLY), data.getStringExtra(NewTaskActivity.EXTRA_WEIGHT), data.getStringExtra(NewTaskActivity.EXTRA_TYPE));
+            Task task = new Task(data.getStringExtra(NewTaskActivity.EXTRA_NAME), data.getStringExtra(NewTaskActivity.EXTRA_WEIGHT),
+                                data.getStringExtra(NewTaskActivity.EXTRA_TYPE), data.getStringExtra(NewTaskActivity.EXTRA_NOTES));
             //update task background color depending on weight
 //            if (task.getWeight() == "Hard") {
 //
@@ -170,10 +179,12 @@ public class MainActivity extends AppCompatActivity {
             String name = data.getStringExtra(EditTaskActivity.EXTRA_NEW_NAME);
             String weight = data.getStringExtra(EditTaskActivity.EXTRA_NEW_WEIGHT);
             String type = data.getStringExtra(EditTaskActivity.EXTRA_NEW_TYPE);
+            String notes = data.getStringExtra(EditTaskActivity.EXTRA_NEW_NOTES);
             int id = data.getIntExtra(EditTaskActivity.EXTRA_NEW_ID, -1);
             mTaskViewModel.updateName(id, name);
             mTaskViewModel.updateWeight(id, weight);
             mTaskViewModel.updateType(id, type);
+            mTaskViewModel.updateNotes(id, notes);
         }
         else {
             Toast.makeText(

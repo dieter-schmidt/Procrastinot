@@ -25,11 +25,15 @@ public class Task {
     @ColumnInfo(name = "type")
     private String mType;
 
-    public Task(@NonNull String task, String weight, String type) {
+    @ColumnInfo(name = "notes")
+    private String mNotes;
+
+    public Task(@NonNull String task, String weight, String type, String notes) {
         this.mID = 0;
         this.mTask = task;
         this.mWeight = weight;
         this.mType = type;
+        this.mNotes = notes;
     }
 
     public void setID(int id){mID = id;}
@@ -39,6 +43,8 @@ public class Task {
     public String getWeight(){return this.mWeight;}
 
     public String getType(){return this.mType;}
+
+    public String getNotes(){return this.mNotes;}
 
     public int getID(){return this.mID;}
 }

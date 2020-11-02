@@ -16,13 +16,15 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 public class NewTaskActivity extends AppCompatActivity {
-    public static final String EXTRA_REPLY = "com.example.android.myapplication.REPLY";
+    public static final String EXTRA_NAME = "com.example.android.myapplication.NAME";
             //"com.example.android.roomwordssample.REPLY";
     public static final String EXTRA_WEIGHT = "com.example.android.myapplication.WEIGHT";
     public static final String EXTRA_TYPE = "com.example.android.myapplication.TYPE";
+    public static final String EXTRA_NOTES = "com.example.android.myapplication.NOTES";
 
     private EditText mEditTaskView;
     private EditText mEditTypeView;
+    private EditText mEditNotesView;
     private RadioGroup mEditWeightRadioGroup;
     private RadioButton mWeightRadioButton;
 
@@ -32,6 +34,7 @@ public class NewTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_word);
         mEditTaskView = findViewById(R.id.edit_task);
         mEditTypeView = findViewById(R.id.edit_type);
+        mEditNotesView = findViewById(R.id.edit_notes);
         mEditWeightRadioGroup = findViewById(R.id.edit_weight_radio_group);
         mEditWeightRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
              @Override
@@ -51,6 +54,14 @@ public class NewTaskActivity extends AppCompatActivity {
                     setResult(RESULT_CANCELED, replyIntent);
                 } else {
                     String task = mEditTaskView.getText().toString();
+                    String notes;
+                    if (mEditNotesView.getText() != null)
+                    {
+                        notes = mEditNotesView.getText().toString();
+                    }
+                    else {
+                        notes = null;
+                    }
                     String weight;
                     if (mWeightRadioButton != null) {
                         weight = mWeightRadioButton.getText().toString();
@@ -59,9 +70,10 @@ public class NewTaskActivity extends AppCompatActivity {
                         weight = "Medium";
                     }
                     String type = mEditTypeView.getText().toString();
-                    replyIntent.putExtra(EXTRA_REPLY, task);
+                    replyIntent.putExtra(EXTRA_NAME, task);
                     replyIntent.putExtra(EXTRA_WEIGHT, weight);
                     replyIntent.putExtra(EXTRA_TYPE, type);
+                    replyIntent.putExtra(EXTRA_NOTES, notes);
                     setResult(RESULT_OK, replyIntent);
                 }
                 MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.hitsound);

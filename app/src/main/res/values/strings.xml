@@ -20,4 +20,7 @@
     <string name="text_easy">Easy</string>
     <string name="text_medium">Medium</string>
     <string name="text_hard">Hard</string>
+    <string name="notes_description">Notes/Description</string>
+    <string name="notes_hint">Add notes...</string>
+    <string name="view_notes">View Notes</string>
 </resources>

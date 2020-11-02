@@ -41,6 +41,13 @@ public class TaskRepository {
         //mTaskDao.updateType(taskID, taskType);
     }
 
+    public void updateNotes(int taskID, String taskNotes)
+    {
+        UpdateParams params = new UpdateParams(taskID, taskNotes);
+        new updateNotesAsyncTask(mTaskDao).execute(params);
+        //mTaskDao.updateType(taskID, taskType);
+    }
+
     public void insert (Task task) {
         new insertAsyncTask(mTaskDao).execute(task);
     }
@@ -106,6 +113,20 @@ public class TaskRepository {
         @Override
         protected Void doInBackground(final UpdateParams... params) {
             mAsyncTaskDao.updateWeight(params[0].id, params[0].field);
+            return null;
+        }
+    }
+
+    private static class updateNotesAsyncTask extends AsyncTask<UpdateParams, Void, Void> {
+        private TaskDao mAsyncTaskDao;
+
+        updateNotesAsyncTask(TaskDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final UpdateParams... params) {
+            mAsyncTaskDao.updateNotes(params[0].id, params[0].field);
             return null;
         }
     }
