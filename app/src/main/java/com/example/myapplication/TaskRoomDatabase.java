@@ -2,12 +2,15 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import java.util.Random;
 
 @Database(entities = {Task.class}, version = 6, exportSchema = false)
 public abstract class TaskRoomDatabase extends RoomDatabase {
@@ -50,7 +53,7 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
         private final TaskDao mDao;
-        String[] tasks = {"Laundry", "Work Out", "Take out the Trash"};
+        String[] tasks = {"Laundry", "Work Out", "Take out the Trash", "Bibbery", "Bobbery", "Do Drugs", "Create World Peace", "Check your Privilege"};
 
         PopulateDbAsync(TaskRoomDatabase db) {
             mDao = db.taskDao();
@@ -65,7 +68,21 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
             // If we have no tasks, then create the initial list of tasks
             if (mDao.getAnyTask().length < 1) {
                 for (int i = 0; i <= tasks.length - 1; i++) {
-                    Task task = new Task(tasks[i], "medium", null, null);
+                    Random rand = new Random();
+                    int randomInt = rand.nextInt(3);
+                    String weight;
+                    Log.e("RANDOM TEST", String.valueOf(randomInt));
+                    switch(randomInt) {
+                        case(0):
+                            weight = "Easy";
+                            break;
+                        case (1):
+                            weight = "Medium";
+                            break;
+                        default:
+                            weight = "Hard";
+                    }
+                    Task task = new Task(tasks[i], weight, "Fitness", "Basic notes text.");
                     mDao.insert(task);
                 }
             }
