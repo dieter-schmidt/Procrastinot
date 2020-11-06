@@ -93,6 +93,7 @@ public class EditTaskActivity extends AppCompatActivity {
                     Log.e("WEIGHT_TEST", "Weight = "+weight);
                     Log.e("ID_TEST", "ID = "+id);
                     String type = mEditTypeView.getText().toString();
+                    Log.e("TEST", "TYPE = "+type);
                     replyIntent.putExtra(EXTRA_NEW_NAME, task);
                     replyIntent.putExtra(EXTRA_NEW_WEIGHT, weight);
                     replyIntent.putExtra(EXTRA_NEW_TYPE, type);
