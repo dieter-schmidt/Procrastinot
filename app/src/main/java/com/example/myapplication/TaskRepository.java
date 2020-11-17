@@ -48,6 +48,13 @@ public class TaskRepository {
         //mTaskDao.updateType(taskID, taskType);
     }
 
+    public void updateCompletionStatus(int taskID, boolean taskStatus)
+    {
+        UpdateParams params = new UpdateParams(taskID, taskStatus);
+        new updateStatusAsyncTask(mTaskDao).execute(params);
+        //mTaskDao.updateType(taskID, taskType);
+    }
+
     public void insert (Task task) {
         new insertAsyncTask(mTaskDao).execute(task);
     }
@@ -95,11 +102,16 @@ public class TaskRepository {
 
     private static class UpdateParams {
         int id;
-        String field;
+        String sField;
+        boolean bField;
 
         UpdateParams(int id, String field) {
             this.id = id;
-            this.field = field;
+            this.sField = field;
+        }
+        UpdateParams(int id, boolean field) {
+            this.id = id;
+            this.bField = field;
         }
     }
 
@@ -112,7 +124,7 @@ public class TaskRepository {
 
         @Override
         protected Void doInBackground(final UpdateParams... params) {
-            mAsyncTaskDao.updateWeight(params[0].id, params[0].field);
+            mAsyncTaskDao.updateWeight(params[0].id, params[0].sField);
             return null;
         }
     }
@@ -126,7 +138,7 @@ public class TaskRepository {
 
         @Override
         protected Void doInBackground(final UpdateParams... params) {
-            mAsyncTaskDao.updateNotes(params[0].id, params[0].field);
+            mAsyncTaskDao.updateNotes(params[0].id, params[0].sField);
             return null;
         }
     }
@@ -140,7 +152,21 @@ public class TaskRepository {
 
         @Override
         protected Void doInBackground(final UpdateParams... params) {
-            mAsyncTaskDao.updateName(params[0].id, params[0].field);
+            mAsyncTaskDao.updateName(params[0].id, params[0].sField);
+            return null;
+        }
+    }
+
+    private static class updateStatusAsyncTask extends AsyncTask<UpdateParams, Void, Void> {
+        private TaskDao mAsyncTaskDao;
+
+        updateStatusAsyncTask(TaskDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final UpdateParams... params) {
+            mAsyncTaskDao.updateCompletionStatus(params[0].id, params[0].bField);
             return null;
         }
     }
@@ -154,7 +180,7 @@ public class TaskRepository {
 
         @Override
         protected Void doInBackground(final UpdateParams... params) {
-            mAsyncTaskDao.updateType(params[0].id, params[0].field);
+            mAsyncTaskDao.updateType(params[0].id, params[0].sField);
             return null;
         }
     }

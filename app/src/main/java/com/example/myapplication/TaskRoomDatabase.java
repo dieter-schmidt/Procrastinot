@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.Random;
 
-@Database(entities = {Task.class}, version = 6, exportSchema = false)
+@Database(entities = {Task.class}, version = 7, exportSchema = false)
 public abstract class TaskRoomDatabase extends RoomDatabase {
 
     public abstract TaskDao taskDao();

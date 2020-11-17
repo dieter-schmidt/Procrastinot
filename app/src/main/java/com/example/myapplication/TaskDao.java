@@ -41,4 +41,8 @@ public interface TaskDao {
 
     @Query("UPDATE task_table SET notes = :taskNotes WHERE ID = :taskID")
     void updateNotes(int taskID, String taskNotes);
+
+    @Query("UPDATE task_table SET completion_status = :taskStatus where ID = :taskID")
+    void updateCompletionStatus(int taskID, boolean taskStatus);
+
 }

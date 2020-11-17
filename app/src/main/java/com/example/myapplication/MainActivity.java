@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
@@ -76,6 +77,20 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), task.getNotes(), Toast.LENGTH_LONG).show();
                 PopupWindow popup = new PopupWindow(50, 50);
             }
+
+            @Override
+            public void onCompleteClick(Task task, View v) {
+                CheckBox cb = (CheckBox) v;
+                if (cb.isChecked()) {
+                    Toast.makeText(getApplicationContext(), "Task Complete!!!", Toast.LENGTH_SHORT).show();
+                    mTaskViewModel.updateCompletionStatus(task.getID(), true);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Task Incomplete.", Toast.LENGTH_SHORT).show();
+                    mTaskViewModel.updateCompletionStatus(task.getID(), false);
+                }
+            }
+
         });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

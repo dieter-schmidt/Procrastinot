@@ -28,13 +28,19 @@ public class Task {
     @ColumnInfo(name = "notes")
     private String mNotes;
 
+    @ColumnInfo(name = "completion_status")
+    private boolean mCompletionStatus;
+
     public Task(@NonNull String task, String weight, String type, String notes) {
         this.mID = 0;
         this.mTask = task;
         this.mWeight = weight;
         this.mType = type;
         this.mNotes = notes;
+        this.mCompletionStatus = false;
     }
+
+    public void setCompletionStatus(boolean status){mCompletionStatus = status;}
 
     public void setID(int id){mID = id;}
 
@@ -45,6 +51,8 @@ public class Task {
     public String getType(){return this.mType;}
 
     public String getNotes(){return this.mNotes;}
+
+    public boolean getCompletionStatus(){return this.mCompletionStatus;}
 
     public int getID(){return this.mID;}
 }

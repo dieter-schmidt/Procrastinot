@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,7 +49,19 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
             else if (current.getWeight().equals("Easy")) {
                 holder.taskItemView.setBackgroundColor(mInflater.getContext().getResources().getColor(R.color.colorTaskEasy));
                 holder.taskItemView.setTextColor(Color.BLACK);
+            }
 
+            if (current.getCompletionStatus() == true){
+                holder.checkBoxView.setChecked(true);
+                holder.taskItemView.setAlpha(0.2f);
+                holder.notesItemView.setAlpha(0.2f);
+                holder.typeItemView.setAlpha(0.2f);
+            }
+            else {
+                holder.checkBoxView.setChecked(false);
+                holder.taskItemView.setAlpha(1f);
+                holder.notesItemView.setAlpha(1f);
+                holder.typeItemView.setAlpha(1f);
             }
         } else {
             // Covers the case of data not being ready yet.
@@ -65,6 +78,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
         holder.notesItemView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 listener.onNotesClick(task);
+            }
+        });
+        holder.checkBoxView.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                listener.onCompleteClick(task, v);
             }
         });
     }
@@ -91,12 +109,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
         private final TextView taskItemView;
         private final TextView typeItemView;
         private final TextView notesItemView;
+        private final CheckBox checkBoxView;
 
         private TaskViewHolder(View itemView) {
             super(itemView);
             taskItemView = itemView.findViewById(R.id.textView);
             typeItemView = itemView.findViewById(R.id.type_view);
             notesItemView = itemView.findViewById(R.id.notes_view);
+            checkBoxView = itemView.findViewById(R.id.complete_checkbox);
         }
     }
 }

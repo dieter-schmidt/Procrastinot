@@ -36,5 +36,7 @@ public class TaskViewModel extends AndroidViewModel {
 
     public void updateNotes(int taskID, String taskNotes) {mRepository.updateNotes(taskID, taskNotes);}
 
+    public void updateCompletionStatus(int taskID, boolean taskStatus) {mRepository.updateCompletionStatus(taskID, taskStatus);}
+
 
 }
