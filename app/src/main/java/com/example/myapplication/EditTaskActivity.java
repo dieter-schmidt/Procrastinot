@@ -49,11 +49,11 @@ public class EditTaskActivity extends AppCompatActivity {
 
         //Populate fields with current task data - sent from Main Activity
         Bundle taskData = getIntent().getExtras();
-        final int id = taskData.getInt(MainActivity.EXTRA_ID);
-        String name = taskData.getString(MainActivity.EXTRA_NAME);
-        String type = taskData.getString(MainActivity.EXTRA_TYPE);
-        String weight = taskData.getString(MainActivity.EXTRA_WEIGHT);
-        String notes = taskData.getString(MainActivity.EXTRA_NOTES);
+        final int id = taskData.getInt(TaskFragment.EXTRA_ID);
+        String name = taskData.getString(TaskFragment.EXTRA_NAME);
+        String type = taskData.getString(TaskFragment.EXTRA_TYPE);
+        String weight = taskData.getString(TaskFragment.EXTRA_WEIGHT);
+        String notes = taskData.getString(TaskFragment.EXTRA_NOTES);
         Log.e("BIBBERY", weight);
 
         mEditTaskView.setText(name);
