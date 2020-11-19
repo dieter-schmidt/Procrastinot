@@ -24,7 +24,10 @@
     <string name="text_hard">Hard</string>
     <string name="notes_description">Notes/Description</string>
     <string name="notes_hint">Add notes...</string>
+    <string name="journal_hint">Add journal entry...</string>
     <string name="view_notes">View Notes</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="notes_tab_description">Daily Notes</string>
+    <string name="journal_tab_description">Daily Journal</string>
 </resources>
