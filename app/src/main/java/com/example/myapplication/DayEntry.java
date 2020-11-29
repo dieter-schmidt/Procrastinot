@@ -4,13 +4,14 @@ import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import java.time.LocalDate;
 import java.util.Calendar;
 
-@Entity(tableName = "dayentry_table")
+@Entity(tableName = "day_entry_table")
 @TypeConverters(CalendarConverter.class)
 public class DayEntry {
 

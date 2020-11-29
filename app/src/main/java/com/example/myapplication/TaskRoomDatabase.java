@@ -16,6 +16,7 @@ import java.util.Random;
 public abstract class TaskRoomDatabase extends RoomDatabase {
 
     public abstract TaskDao taskDao();
+    public abstract DayEntryDao dayEntryDao();
     private static TaskRoomDatabase INSTANCE;
 
     public static TaskRoomDatabase getDatabase(final Context context) {
@@ -52,11 +53,13 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
      */
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
-        private final TaskDao mDao;
+        private final TaskDao mTaskDao;
+        private final DayEntryDao mDayEntryDao;
         String[] tasks = {"Laundry", "Work Out", "Take out the Trash", "Bibbery", "Bobbery", "Do Drugs", "Create World Peace", "Check your Privilege"};
 
         PopulateDbAsync(TaskRoomDatabase db) {
-            mDao = db.taskDao();
+            mTaskDao = db.taskDao();
+            mDayEntryDao = db.dayEntryDao();
         }
 
         @Override
@@ -66,7 +69,7 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
             // when it is first created
             //mDao.deleteAll();
             // If we have no tasks, then create the initial list of tasks
-            if (mDao.getAnyTask().length < 1) {
+            if (mTaskDao.getAnyTask().length < 1) {
                 for (int i = 0; i <= tasks.length - 1; i++) {
                     Random rand = new Random();
                     int randomInt = rand.nextInt(3);
@@ -83,7 +86,7 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
                             weight = "Hard";
                     }
                     Task task = new Task(tasks[i], weight, "Fitness", "Basic notes text.");
-                    mDao.insert(task);
+                    mTaskDao.insert(task);
                 }
             }
             return null;

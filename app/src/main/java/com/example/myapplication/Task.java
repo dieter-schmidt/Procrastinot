@@ -4,15 +4,22 @@ import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "task_table")
+@Entity(tableName = "task_table",
+        foreignKeys = @ForeignKey(entity = DayEntry.class,
+        parentColumns = "date",
+        childColumns = "date"))//,onDelete = CASCADE))
 public class Task {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name = "ID")
     private int mID;
+
+    @ColumnInfo(name = "date")
+    private String mDate;
 
 //    @PrimaryKey
     @NonNull
