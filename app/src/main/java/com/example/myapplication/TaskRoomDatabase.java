@@ -10,9 +10,11 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 
-@Database(entities = {Task.class}, version = 7, exportSchema = false)
+@Database(entities = {Task.class, DayEntry.class}, version = 9, exportSchema = false)
 public abstract class TaskRoomDatabase extends RoomDatabase {
 
     public abstract TaskDao taskDao();
@@ -68,6 +70,7 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
             // Not needed if you only populate the database
             // when it is first created
             //mDao.deleteAll();
+            mDayEntryDao.deleteAll();
             // If we have no tasks, then create the initial list of tasks
             if (mTaskDao.getAnyTask().length < 1) {
                 for (int i = 0; i <= tasks.length - 1; i++) {
@@ -88,6 +91,15 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
                     Task task = new Task(tasks[i], weight, "Fitness", "Basic notes text.");
                     mTaskDao.insert(task);
                 }
+            }
+            if (mDayEntryDao.getAnyDayEntry().length < 1) {
+                DayEntry day = new DayEntry(CalendarConverter.fromCalendar(Calendar.getInstance()),null,null);
+                mDayEntryDao.insert(day);
+            }
+            DayEntry[] entries = mDayEntryDao.getAnyDayEntry();
+//            List<DayEntry> entries = mDayEntryDao.getAllDayEntries().getValue();
+            for (DayEntry day: entries) {
+                Log.e("DAY", day.getDate());
             }
             return null;
         }

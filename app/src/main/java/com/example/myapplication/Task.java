@@ -7,10 +7,10 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "task_table",
-        foreignKeys = @ForeignKey(entity = DayEntry.class,
-        parentColumns = "date",
-        childColumns = "date"))//,onDelete = CASCADE))
+@Entity(tableName = "task_table")//,
+//        foreignKeys = @ForeignKey(entity = DayEntry.class,
+//        parentColumns = "date",
+//        childColumns = "date"))//,onDelete = CASCADE))
 public class Task {
 
     @PrimaryKey(autoGenerate = true)
@@ -45,11 +45,14 @@ public class Task {
         this.mType = type;
         this.mNotes = notes;
         this.mCompletionStatus = false;
+        this.mDate = null;
     }
 
     public void setCompletionStatus(boolean status){mCompletionStatus = status;}
 
     public void setID(int id){mID = id;}
+
+    public void setDate(String date){mDate = date;}
 
     public String getTask(){return this.mTask;}
 
@@ -58,6 +61,8 @@ public class Task {
     public String getType(){return this.mType;}
 
     public String getNotes(){return this.mNotes;}
+
+    public String getDate(){return this.mDate;}
 
     public boolean getCompletionStatus(){return this.mCompletionStatus;}
 

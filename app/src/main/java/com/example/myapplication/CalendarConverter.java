@@ -38,7 +38,7 @@ public class CalendarConverter {
         if (c == null){
             return null;
         }
-        return new SimpleDateFormat("dd-MM-yyyy").format(c.getTime());
+        return new SimpleDateFormat("MM-dd-yyyy").format(c.getTime());
     }
 
 
