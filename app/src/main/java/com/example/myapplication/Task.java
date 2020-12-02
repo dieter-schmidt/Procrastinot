@@ -38,14 +38,14 @@ public class Task {
     @ColumnInfo(name = "completion_status")
     private boolean mCompletionStatus;
 
-    public Task(@NonNull String task, String weight, String type, String notes) {
+    public Task(@NonNull String task, String weight, String type, String notes, String date) {
         this.mID = 0;
         this.mTask = task;
         this.mWeight = weight;
         this.mType = type;
         this.mNotes = notes;
         this.mCompletionStatus = false;
-        this.mDate = null;
+        this.mDate = date;
     }
 
     public void setCompletionStatus(boolean status){mCompletionStatus = status;}

@@ -69,7 +69,7 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
             // Start the app with a clean database every time.
             // Not needed if you only populate the database
             // when it is first created
-            //mDao.deleteAll();
+            mTaskDao.deleteAll();
             mDayEntryDao.deleteAll();
             // If we have no tasks, then create the initial list of tasks
             if (mTaskDao.getAnyTask().length < 1) {
@@ -88,7 +88,7 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
                         default:
                             weight = "Hard";
                     }
-                    Task task = new Task(tasks[i], weight, "Fitness", "Basic notes text.");
+                    Task task = new Task(tasks[i], weight, "Fitness", "Basic notes text.", CalendarConverter.fromCalendar(Calendar.getInstance()));
                     mTaskDao.insert(task);
                 }
             }
