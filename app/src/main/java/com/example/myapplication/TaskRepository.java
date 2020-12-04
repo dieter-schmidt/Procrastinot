@@ -69,6 +69,11 @@ public class TaskRepository {
         asyncTask.execute(taskName);
         return asyncTask.matches;
     }
+    Task[] getMatchedTasksByDate(String date) {
+        getMatchedTasksByDateAsyncTask asyncTask = new getMatchedTasksByDateAsyncTask(mTaskDao);
+        asyncTask.execute(date);
+        return asyncTask.matches;
+    }
 
     private static class insertAsyncTask extends AsyncTask<Task, Void, Void> {
 
@@ -96,6 +101,21 @@ public class TaskRepository {
         @Override
         protected Void doInBackground(final String... params) {
             matches = mAsyncTaskDao.getMatchedTasksByName(params[0]);
+            return null;
+        }
+    }
+
+    private static class getMatchedTasksByDateAsyncTask extends AsyncTask<String, Void, Task[]> {
+        private TaskDao mAsyncTaskDao;
+        Task[] matches;
+
+        getMatchedTasksByDateAsyncTask(TaskDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Task[] doInBackground(final String... params) {
+            matches = mAsyncTaskDao.getMatchedTasksByDate(params[0]);
             return null;
         }
     }

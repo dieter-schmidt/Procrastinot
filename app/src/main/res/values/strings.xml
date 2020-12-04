@@ -30,4 +30,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="notes_tab_description">Daily Notes</string>
     <string name="journal_tab_description">Daily Journal</string>
+
+    <string name="date">Date:</string>
+    <string name="datepicker">datePicker</string>
+    <string name="change_date">Change Date</string>
+    <string name="current_date">Current Date</string>
 </resources>

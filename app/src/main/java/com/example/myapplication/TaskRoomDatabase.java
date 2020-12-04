@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -47,6 +49,10 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
                 public void onOpen (@NonNull SupportSQLiteDatabase db){
                     super.onOpen(db);
                     new PopulateDbAsync(INSTANCE).execute();
+                    //TODO - refresh tasks
+                    //Broadcast open db to signal task refresh
+//                    IntentFilter filter = new IntentFilter();
+//                    filter.addAction(Intent.ACTION_DB_OPEN);
                 }
             };
 
@@ -90,6 +96,7 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
                     }
                     Task task = new Task(tasks[i], weight, "Fitness", "Basic notes text.", CalendarConverter.fromCalendar(Calendar.getInstance()));
                     mTaskDao.insert(task);
+                    Log.e("TEST", task.getDate());
                 }
             }
             if (mDayEntryDao.getAnyDayEntry().length < 1) {

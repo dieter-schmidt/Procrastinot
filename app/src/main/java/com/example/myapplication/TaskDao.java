@@ -30,6 +30,9 @@ public interface TaskDao {
     @Query("SELECT * from task_table WHERE task IN(:taskName)")
     Task[] getMatchedTasksByName(String taskName);
 
+    @Query("SELECT * from task_table WHERE date IN(:date)")
+    Task[] getMatchedTasksByDate(String date);
+
     @Query("UPDATE task_table SET task = :taskName WHERE ID = :taskID")
     void updateName(int taskID, String taskName);
 

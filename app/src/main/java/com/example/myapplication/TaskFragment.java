@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,13 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Update;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.View;
@@ -37,7 +40,11 @@ import android.widget.Toast;
 
 import android.media.MediaPlayer;
 
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TaskFragment#newInstance} factory method to
@@ -58,6 +65,7 @@ public class TaskFragment extends Fragment {
     public static final String EXTRA_NOTES = "com.example.android.twoactivities.extra.NOTES";
 
     private Task editedTask;
+    TaskListAdapter adapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -124,7 +132,8 @@ public class TaskFragment extends Fragment {
 
 //        RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView = v.findViewById(R.id.recyclerview);
-        final TaskListAdapter adapter = new TaskListAdapter(getContext(), new OnItemClickListener() {
+        //final TaskListAdapter adapter = new TaskListAdapter(getContext(), new OnItemClickListener() {
+        adapter = new TaskListAdapter(getContext(), new OnItemClickListener() {
             @Override
             public void onItemClick(Task task) {
                 Toast.makeText(getActivity().getApplicationContext(), "Item Clicked", Toast.LENGTH_LONG).show();
@@ -167,6 +176,23 @@ public class TaskFragment extends Fragment {
                 adapter.setTasks(tasks);
             }
         });
+//        //TODO - updated adapter to show tasks for current date
+//        MainActivity mActivity = (MainActivity) getActivity();
+//        MenuItem currentDateView = (MenuItem) mActivity.currentDateItem;
+//        String title = currentDateView.getTitle().toString();
+//        Log.e("TEST", "Menu Title: "+title);
+//        boolean dbOpen = TaskRoomDatabase.getDatabase(getActivity().getApplicationContext()).isOpen();
+//        List<Task> tasks = null;
+//        if (dbOpen) {
+//            Task[] selectedDateTasks = mTaskViewModel.getMatchedTasksByDate(currentDateView.getTitle().toString());
+//            if (selectedDateTasks != null) {
+//                tasks = Arrays.asList(selectedDateTasks);
+//            }
+//        }
+        //adapter.setTasks(tasks);
+
+
+
 
         // Add the functionality to swipe items in the
         // recycler view to delete that item
@@ -232,12 +258,42 @@ public class TaskFragment extends Fragment {
         return v;
     }
 
+    public void refreshTasks() {
+        if (getActivity() != null) {
+            MainActivity mActivity = (MainActivity) getActivity();
+            MenuItem currentDateView = (MenuItem) mActivity.currentDateItem;
+            String title = currentDateView.getTitle().toString();
+            Log.e("TEST", "Menu Title: "+title);
+            boolean dbOpen = TaskRoomDatabase.getDatabase(getActivity().getApplicationContext()).isOpen();
+            LiveData<List<Task>> allTasks = mTaskViewModel.getAllTasks();
+            String d = allTasks.getValue().get(0).getDate();
+            //LiveData<List<Task>> selectedDateTasks = mTaskViewModel.getMatchedTasksByDate(currentDateView.getTitle().toString());
+            Task[] selectedDateTasks = mTaskViewModel.getMatchedTasksByDate(title);
+            //LiveData<List<Task>> selectedDateTasks = mTaskViewModel.getMatchedTasksByDate(newDate);
+            if (selectedDateTasks != null) {
+//                selectedDateTasks.observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
+//                //mTaskViewModel.getMatchedTasksByDate(currentDateView.getTitle().toString()).observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
+//                    @Override
+//                    public void onChanged(@Nullable final List<Task> tasks) {
+////                         Update the cached copy of the tasks in the adapter.
+//                        adapter.setTasks(tasks);
+//                    }
+//                });
+                adapter.setTasks(Arrays.asList(selectedDateTasks));
+            }
+            else {
+                adapter.setTasks(null);
+            }
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == NEW_TASK_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Task task = new Task(data.getStringExtra(NewTaskActivity.EXTRA_NAME), data.getStringExtra(NewTaskActivity.EXTRA_WEIGHT),
-                    data.getStringExtra(NewTaskActivity.EXTRA_TYPE), data.getStringExtra(NewTaskActivity.EXTRA_NOTES));
+                    data.getStringExtra(NewTaskActivity.EXTRA_TYPE), data.getStringExtra(NewTaskActivity.EXTRA_NOTES), CalendarConverter.fromCalendar(Calendar.getInstance()));
+            //TODO - fix logic for adding date to new task
             //update task background color depending on weight
 //            if (task.getWeight() == "Hard") {
 //
@@ -261,6 +317,7 @@ public class TaskFragment extends Fragment {
 //                }
 //                //ALTERNATIVE - UPDATE EVERYTHING
 //            }
+            //TODO - add logic for changing date of task
             String name = data.getStringExtra(EditTaskActivity.EXTRA_NEW_NAME);
             String weight = data.getStringExtra(EditTaskActivity.EXTRA_NEW_WEIGHT);
             String type = data.getStringExtra(EditTaskActivity.EXTRA_NEW_TYPE);

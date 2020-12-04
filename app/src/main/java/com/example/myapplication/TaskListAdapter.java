@@ -40,6 +40,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
             bind(current, holder, listener);
             //change background color depending on weight
             Log.e("TEST", current.getWeight());
+            Log.e("TEST", current.getDate());
             if (current.getWeight().equals("Hard")) {
                 holder.taskItemView.setBackgroundColor(mInflater.getContext().getResources().getColor(R.color.colorTaskHard));
             }
@@ -92,9 +93,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
     }
 
     void setTasks(List<Task> tasks){
+        //Log.e("ADAPTER", mTasks.get(0).getDate());
         mTasks = tasks;
         notifyDataSetChanged();
     }
+
+
 
     // getItemCount() is called many times, and when it is first called,
     // mWords has not been updated (means initially, it's null, and we can't return null).

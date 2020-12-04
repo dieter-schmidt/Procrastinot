@@ -8,6 +8,9 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 public class PagerAdapter extends FragmentStatePagerAdapter {
 
     int mNumOfTabs;
+    String date;
+
+    public TaskFragment tFrag;
 
     public PagerAdapter(@NonNull FragmentManager fm, int NumOfTabs) {
         super(fm);
@@ -18,12 +21,22 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 0: return new TaskFragment();
+            case 0:
+//                TaskFragment tFrag = new TaskFragment();
+//                tFrag.refreshTasks();
+//                return tFrag;
+                tFrag = new TaskFragment();
+                return tFrag;
             case 1: return new NotesFragment();
             case 2: return new JournalFragment();
             default: return null;
         }
     }
+
+//    @Override
+//    public int getItemPosition(Object object) {
+//        return POSITION_NONE;
+//    }
 
     @Override
     public int getCount() {
