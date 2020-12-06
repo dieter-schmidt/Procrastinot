@@ -37,6 +37,7 @@ import android.media.MediaPlayer;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -227,9 +228,12 @@ public class MainActivity extends AppCompatActivity {
         // Setting a listener for clicks.
         viewPager.addOnPageChangeListener(new
                 TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.setOffscreenPageLimit(tabLayout.getTabCount());
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                Log.e("TAB", Integer.toString(tab.getPosition()));
                 viewPager.setCurrentItem(tab.getPosition());
 //                if (tab.getPosition() == 0) {
 //                    viewPager.getAdapter()
@@ -238,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+                Log.e("TAB", "Unselected tab: "+tab.getPosition());
             }
 
             @Override
@@ -245,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //TODO - set initial tab, so tasks can be refreshed when the task tab is selected
-        viewPager.setCurrentItem(0);
+        //viewPager.setCurrentItem(0);
     }
 
     @Override
@@ -340,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
      * @param month Chosen month
      * @param day Chosen day
      */
-    public void processDatePickerResult(int year, int month, int day) {
+    public void processDatePickerResult(int year, int month, int day) throws ExecutionException, InterruptedException {
         String month_string = Integer.toString(month + 1);
         if (Integer.parseInt(month_string) < 10) {
             month_string = "0" + month_string;
@@ -362,7 +367,12 @@ public class MainActivity extends AppCompatActivity {
         currentDateItem.setTitle(dateMessage);
         //TaskFragment tFrag = viewPager.getAdapter().
 //        viewPager.getAdapter().
+
+        //update tasks
+        Log.e("FRAGMENT", "MainActivity: " + pAdapter.tFrag.toString());
         pAdapter.tFrag.refreshTasks();
+        pAdapter.nFrag.refreshNotes();
+        pAdapter.jFrag.refreshJournal();
         //pAdapter.notifyDataSetChanged();
     }
 

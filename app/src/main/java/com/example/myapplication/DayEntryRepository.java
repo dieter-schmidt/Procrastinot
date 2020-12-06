@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class DayEntryRepository {
 
@@ -44,6 +45,28 @@ public class DayEntryRepository {
         new deleteAllDayEntriesAsyncTask(mDayEntryDao).execute();
     }
     public void deleteDayEntry(DayEntry dayEntry)  { new deleteDayEntryAsyncTask(mDayEntryDao).execute(dayEntry); }
+
+    DayEntry getMatchedDayEntryByDate(String date) throws ExecutionException, InterruptedException {
+        DayEntryRepository.getMatchedDayEntryByDateAsyncTask asyncTask = new DayEntryRepository.getMatchedDayEntryByDateAsyncTask(mDayEntryDao);
+        asyncTask.execute(date).get();
+        return asyncTask.match;
+    }
+
+    private static class getMatchedDayEntryByDateAsyncTask extends AsyncTask<String, Void, Void> {
+        private DayEntryDao mAsyncDayEntryDao;
+        DayEntry match;
+
+        getMatchedDayEntryByDateAsyncTask(DayEntryDao dao) {
+            mAsyncDayEntryDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final String... params) {
+            match = mAsyncDayEntryDao.getMatchedDayEntryByDate(params[0]);
+            return null;
+        }
+
+    }
 
     private static class insertAsyncTask extends AsyncTask<DayEntry, Void, Void> {
 

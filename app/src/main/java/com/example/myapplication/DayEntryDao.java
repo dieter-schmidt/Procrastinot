@@ -31,6 +31,9 @@ public interface DayEntryDao {
 //    @Query("UPDATE task_table SET task = :taskName WHERE ID = :taskID")
 //    void updateName(int taskID, String taskName);
 
+    @Query("SELECT * from day_entry_table WHERE date IN(:date)")
+    DayEntry getMatchedDayEntryByDate(String date);
+
     @Query("UPDATE day_entry_table SET journal_entry = :journalEntry WHERE date = :date")
     void updateJournalEntry(String date, String journalEntry);
 

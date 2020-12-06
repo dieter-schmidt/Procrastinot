@@ -43,6 +43,7 @@ import android.media.MediaPlayer;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import androidx.appcompat.app.AppCompatActivity;
 /**
@@ -66,6 +67,8 @@ public class TaskFragment extends Fragment {
 
     private Task editedTask;
     TaskListAdapter adapter;
+
+    public Task[] selectedDateTasks = null;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -112,7 +115,6 @@ public class TaskFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_tab_task, container, false);
-
         //setContentView(R.layout.activity_main);
        // Toolbar toolbar = v.findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
@@ -258,7 +260,7 @@ public class TaskFragment extends Fragment {
         return v;
     }
 
-    public void refreshTasks() {
+    public void refreshTasks() throws ExecutionException, InterruptedException {
         if (getActivity() != null) {
             MainActivity mActivity = (MainActivity) getActivity();
             MenuItem currentDateView = (MenuItem) mActivity.currentDateItem;
@@ -270,7 +272,7 @@ public class TaskFragment extends Fragment {
             //LiveData<List<Task>> selectedDateTasks = mTaskViewModel.getMatchedTasksByDate(currentDateView.getTitle().toString());
             Task[] selectedDateTasks = mTaskViewModel.getMatchedTasksByDate(title);
             //LiveData<List<Task>> selectedDateTasks = mTaskViewModel.getMatchedTasksByDate(newDate);
-            if (selectedDateTasks != null) {
+            if (selectedDateTasks != null && selectedDateTasks.length > 0) {
 //                selectedDateTasks.observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
 //                //mTaskViewModel.getMatchedTasksByDate(currentDateView.getTitle().toString()).observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
 //                    @Override
@@ -286,6 +288,24 @@ public class TaskFragment extends Fragment {
             }
         }
     }
+
+//    @Override
+//    public void processFinish(Task[] output) {
+//        if (selectedDateTasks != null && selectedDateTasks.length > 0) {
+////                selectedDateTasks.observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
+////                //mTaskViewModel.getMatchedTasksByDate(currentDateView.getTitle().toString()).observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
+////                    @Override
+////                    public void onChanged(@Nullable final List<Task> tasks) {
+//////                         Update the cached copy of the tasks in the adapter.
+////                        adapter.setTasks(tasks);
+////                    }
+////                });
+//            adapter.setTasks(Arrays.asList(selectedDateTasks));
+//        }
+//        else {
+//            adapter.setTasks(null);
+//        }
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -335,4 +355,6 @@ public class TaskFragment extends Fragment {
                     Toast.LENGTH_LONG).show();
         }
     }
+
+
 }

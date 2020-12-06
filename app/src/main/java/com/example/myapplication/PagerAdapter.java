@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,6 +13,8 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     String date;
 
     public TaskFragment tFrag;
+    public NotesFragment nFrag;
+    public JournalFragment jFrag;
 
     public PagerAdapter(@NonNull FragmentManager fm, int NumOfTabs) {
         super(fm);
@@ -26,9 +30,16 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 //                tFrag.refreshTasks();
 //                return tFrag;
                 tFrag = new TaskFragment();
+                Log.e("FRAGMENT", "getItem: " + tFrag.toString());
                 return tFrag;
-            case 1: return new NotesFragment();
-            case 2: return new JournalFragment();
+            case 1:
+                nFrag = new NotesFragment();
+                Log.e("FRAGMENT", "getItem: " + nFrag.toString());
+                return nFrag;
+            case 2:
+                jFrag = new JournalFragment();
+                Log.e("FRAGMENT", "getItem: " + jFrag.toString());
+                return jFrag;
             default: return null;
         }
     }

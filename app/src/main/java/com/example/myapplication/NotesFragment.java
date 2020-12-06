@@ -3,10 +3,15 @@ package com.example.myapplication;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +19,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class NotesFragment extends Fragment {
+
+    private DayEntryViewModel mDayEntryModel;
+    private EditText editNotesField;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +67,34 @@ public class NotesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tab_notes, container, false);
+        View v = inflater.inflate(R.layout.fragment_tab_notes, container, false);
+
+        editNotesField = v.findViewById(R.id.edit_tab_notes);
+        mDayEntryModel = ViewModelProviders.of(this).get(DayEntryViewModel.class);
+        refreshNotes();
+        return v;
+    }
+
+    public void refreshNotes() {
+        String dateTitle;
+        if (getActivity() != null) {
+            MainActivity mActivity = (MainActivity) getActivity();
+            MenuItem currentDateView = (MenuItem) mActivity.currentDateItem;
+            dateTitle = currentDateView.getTitle().toString();
+            DayEntry dayEntry = null;
+            try {
+                dayEntry = mDayEntryModel.getMatchedDayEntryByDate(dateTitle);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (dayEntry != null) {
+                editNotesField.setText(dayEntry.getNotes());
+            }
+            else {
+                editNotesField.setText(null);
+            }
+        }
     }
 }

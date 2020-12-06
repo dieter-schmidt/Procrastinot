@@ -100,7 +100,7 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
                 }
             }
             if (mDayEntryDao.getAnyDayEntry().length < 1) {
-                DayEntry day = new DayEntry(CalendarConverter.fromCalendar(Calendar.getInstance()),null,null);
+                DayEntry day = new DayEntry(CalendarConverter.fromCalendar(Calendar.getInstance()),"Placeholder notes.","Placeholder journal entry.");
                 mDayEntryDao.insert(day);
             }
             DayEntry[] entries = mDayEntryDao.getAnyDayEntry();

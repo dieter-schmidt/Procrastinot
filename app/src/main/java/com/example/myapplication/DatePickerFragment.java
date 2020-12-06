@@ -32,6 +32,7 @@ import android.widget.DatePicker;
 import com.example.myapplication.MainActivity;
 
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass for the date picker.
@@ -71,6 +72,12 @@ public class DatePickerFragment extends DialogFragment
         // Set the activity to the Main Activity.
         MainActivity activity = (MainActivity) getActivity();
         // Invoke Main Activity's processDatePickerResult() method.
-        activity.processDatePickerResult(year, month, day);
+        try {
+            activity.processDatePickerResult(year, month, day);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

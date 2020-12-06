@@ -2,10 +2,12 @@ package com.example.myapplication;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class TaskRepository {
 
@@ -69,9 +71,14 @@ public class TaskRepository {
         asyncTask.execute(taskName);
         return asyncTask.matches;
     }
-    Task[] getMatchedTasksByDate(String date) {
+    Task[] getMatchedTasksByDate(String date) throws ExecutionException, InterruptedException {
         getMatchedTasksByDateAsyncTask asyncTask = new getMatchedTasksByDateAsyncTask(mTaskDao);
-        asyncTask.execute(date);
+        try {
+            asyncTask.execute(date).get();
+        }
+        catch (Exception e) {
+            Log.e("ERROR", "ERROR IN ASYNC");
+        }
         return asyncTask.matches;
     }
 
@@ -103,14 +110,17 @@ public class TaskRepository {
             matches = mAsyncTaskDao.getMatchedTasksByName(params[0]);
             return null;
         }
+
     }
 
     private static class getMatchedTasksByDateAsyncTask extends AsyncTask<String, Void, Task[]> {
+        //public AsyncResponse delegate = null;
         private TaskDao mAsyncTaskDao;
         Task[] matches;
 
         getMatchedTasksByDateAsyncTask(TaskDao dao) {
             mAsyncTaskDao = dao;
+            //delegate = tFrag;
         }
 
         @Override
@@ -118,6 +128,11 @@ public class TaskRepository {
             matches = mAsyncTaskDao.getMatchedTasksByDate(params[0]);
             return null;
         }
+
+//        @Override
+//        protected void onPostExecute(Task[] tasks) {
+//            delegate.processFinish(matches);
+//        }
     }
 
     private static class UpdateParams {

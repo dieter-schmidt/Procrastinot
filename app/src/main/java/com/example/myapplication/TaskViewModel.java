@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class TaskViewModel extends AndroidViewModel {
 
@@ -31,7 +32,7 @@ public class TaskViewModel extends AndroidViewModel {
 
     Task[] getMatchedTasksByName(String taskName) {return mRepository.getMatchedTasksByName(taskName);}
 
-    Task[] getMatchedTasksByDate(String date) {return mRepository.getMatchedTasksByDate(date);}
+    Task[] getMatchedTasksByDate(String date) throws ExecutionException, InterruptedException {return mRepository.getMatchedTasksByDate(date);}
 
     public void updateName(int taskID, String taskName) {mRepository.updateName(taskID, taskName);}
 

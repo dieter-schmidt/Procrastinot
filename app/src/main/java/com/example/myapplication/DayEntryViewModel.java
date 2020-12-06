@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class DayEntryViewModel extends AndroidViewModel {
 
@@ -23,6 +24,8 @@ public class DayEntryViewModel extends AndroidViewModel {
 //    List<DayEntry> getAllDayEntries() { return mAllDayEntries; }
 
     public void insert(DayEntry dayEntry) { mRepository.insert(dayEntry); }
+
+    public DayEntry getMatchedDayEntryByDate(String date) throws ExecutionException, InterruptedException { return mRepository.getMatchedDayEntryByDate(date); }
 
     public void deleteAll() {mRepository.deleteAll();}
 
