@@ -332,6 +332,14 @@ public class MainActivity extends AppCompatActivity {
      * @param view View that was clicked
      */
     public void showDatePicker(View view) {
+        //update notes and/or journal when datepicker is selected (not handled by focus change listener)
+        if (pAdapter.nFrag.isNotesChanged()) {
+            pAdapter.nFrag.updateNotes();
+        }
+        if (pAdapter.jFrag.isJournalChanged()) {
+            pAdapter.jFrag.updateJournal();
+        }
+
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(),
                 getString(R.string.datepicker));

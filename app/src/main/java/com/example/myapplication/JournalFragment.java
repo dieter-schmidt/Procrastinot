@@ -5,6 +5,9 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +25,7 @@ public class JournalFragment extends Fragment {
 
     private DayEntryViewModel mDayEntryModel;
     private EditText editJournalField;
+    private boolean journalChanged = false;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,6 +38,14 @@ public class JournalFragment extends Fragment {
 
     public JournalFragment() {
         // Required empty public constructor
+    }
+
+    public boolean isJournalChanged() {
+        return journalChanged;
+    }
+
+    public void setJournalChanged(boolean journalChanged) {
+        this.journalChanged = journalChanged;
     }
 
     /**
@@ -70,9 +82,48 @@ public class JournalFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_tab_journal, container, false);
 
         editJournalField = v.findViewById(R.id.edit_journal);
+        editJournalField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Log.e("NOTES", "Notes Focus Changed, "+hasFocus);
+                if (hasFocus) {
+                    journalChanged = false;
+                }
+                else {
+                    if (journalChanged) {
+                        //update journal
+                        updateJournal();
+                    }
+                }
+            }
+        });
+        editJournalField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.e("NOTES", "Notes Changed");
+                journalChanged = true;
+            }
+        });
         mDayEntryModel = ViewModelProviders.of(this).get(DayEntryViewModel.class);
         refreshJournal();
         return v;
+    }
+
+    public void updateJournal() {
+        MainActivity mActivity = (MainActivity) getActivity();
+        MenuItem currentDateView = (MenuItem) mActivity.currentDateItem;
+        String title = currentDateView.getTitle().toString();
+        mDayEntryModel.updateJournalEntry(title, editJournalField.getText().toString());
     }
 
     public void refreshJournal() {

@@ -5,6 +5,9 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +25,7 @@ public class NotesFragment extends Fragment {
 
     private DayEntryViewModel mDayEntryModel;
     private EditText editNotesField;
+    private boolean notesChanged = false;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,6 +38,14 @@ public class NotesFragment extends Fragment {
 
     public NotesFragment() {
         // Required empty public constructor
+    }
+
+    public boolean isNotesChanged() {
+        return notesChanged;
+    }
+
+    public void setNotesChanged(boolean notesChanged) {
+        this.notesChanged = notesChanged;
     }
 
     /**
@@ -70,9 +82,48 @@ public class NotesFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_tab_notes, container, false);
 
         editNotesField = v.findViewById(R.id.edit_tab_notes);
+        editNotesField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Log.e("NOTES", "Notes Focus Changed, "+hasFocus);
+                if (hasFocus) {
+                    notesChanged = false;
+                }
+                else {
+                    if (notesChanged) {
+                        //update notes
+                        updateNotes();
+                    }
+                }
+            }
+        });
+        editNotesField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.e("NOTES", "Notes Changed");
+                notesChanged = true;
+            }
+        });
         mDayEntryModel = ViewModelProviders.of(this).get(DayEntryViewModel.class);
         refreshNotes();
         return v;
+    }
+
+    public void updateNotes() {
+        MainActivity mActivity = (MainActivity) getActivity();
+        MenuItem currentDateView = (MenuItem) mActivity.currentDateItem;
+        String title = currentDateView.getTitle().toString();
+        mDayEntryModel.updateNotes(title, editNotesField.getText().toString());
     }
 
     public void refreshNotes() {
