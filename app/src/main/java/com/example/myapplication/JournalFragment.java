@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.concurrent.ExecutionException;
 
@@ -25,6 +26,7 @@ public class JournalFragment extends Fragment {
 
     private DayEntryViewModel mDayEntryModel;
     private EditText editJournalField;
+    private TextView journalDateField;
     private boolean journalChanged = false;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -81,6 +83,7 @@ public class JournalFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_tab_journal, container, false);
 
+        journalDateField = v.findViewById(R.id.journal_date);
         editJournalField = v.findViewById(R.id.edit_journal);
         editJournalField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -132,6 +135,7 @@ public class JournalFragment extends Fragment {
             MainActivity mActivity = (MainActivity) getActivity();
             MenuItem currentDateView = (MenuItem) mActivity.currentDateItem;
             dateTitle = currentDateView.getTitle().toString();
+            this.journalDateField.setText(dateTitle);
             DayEntry dayEntry = null;
             try {
                 dayEntry = mDayEntryModel.getMatchedDayEntryByDate(dateTitle);

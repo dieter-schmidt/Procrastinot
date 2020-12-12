@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -39,6 +40,12 @@ public class NotesFragment extends Fragment {
     public NotesFragment() {
         // Required empty public constructor
     }
+
+//    public void setFont() {
+//        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(),
+//                "");
+//        this.editNotesField.setTypeface(tf);
+//    }
 
     public boolean isNotesChanged() {
         return notesChanged;
@@ -116,6 +123,7 @@ public class NotesFragment extends Fragment {
         });
         mDayEntryModel = ViewModelProviders.of(this).get(DayEntryViewModel.class);
         refreshNotes();
+//        setFont();
         return v;
     }
 
