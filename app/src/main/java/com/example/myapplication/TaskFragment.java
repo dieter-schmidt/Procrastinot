@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -64,6 +65,7 @@ public class TaskFragment extends Fragment {
     public static final String EXTRA_WEIGHT = "com.example.android.twoactivities.extra.WEIGHT";
     public static final String EXTRA_ID = "com.example.android.twoactivities.extra.ID";
     public static final String EXTRA_NOTES = "com.example.android.twoactivities.extra.NOTES";
+    public static final String EXTRA_COLOR = "com.example.android.twoactivities.extra.COLOR";
 
     private Task editedTask;
     TaskListAdapter adapter;
@@ -145,6 +147,7 @@ public class TaskFragment extends Fragment {
                 intent.putExtra(EXTRA_WEIGHT, task.getWeight());
                 intent.putExtra(EXTRA_NOTES, task.getNotes());
                 intent.putExtra(EXTRA_ID, task.getID());
+                intent.putExtra(EXTRA_COLOR, task.getColor());
                 startActivityForResult(intent, EDIT_TASK_ACTIVITY_REQUEST_CODE);
             }
             public void onNotesClick(Task task) {
@@ -312,7 +315,7 @@ public class TaskFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == NEW_TASK_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Task task = new Task(data.getStringExtra(NewTaskActivity.EXTRA_NAME), data.getStringExtra(NewTaskActivity.EXTRA_WEIGHT),
-                    data.getStringExtra(NewTaskActivity.EXTRA_TYPE), data.getStringExtra(NewTaskActivity.EXTRA_NOTES), CalendarConverter.fromCalendar(Calendar.getInstance()));
+                    data.getStringExtra(NewTaskActivity.EXTRA_TYPE), data.getStringExtra(NewTaskActivity.EXTRA_NOTES), CalendarConverter.fromCalendar(Calendar.getInstance()), "#F44336");
             //TODO - fix logic for adding date to new task
             //update task background color depending on weight
 //            if (task.getWeight() == "Hard") {
@@ -343,16 +346,18 @@ public class TaskFragment extends Fragment {
             String type = data.getStringExtra(EditTaskActivity.EXTRA_NEW_TYPE);
             String notes = data.getStringExtra(EditTaskActivity.EXTRA_NEW_NOTES);
             int id = data.getIntExtra(EditTaskActivity.EXTRA_NEW_ID, -1);
+            String color = data.getStringExtra(EditTaskActivity.EXTRA_NEW_COLOR);
             mTaskViewModel.updateName(id, name);
             mTaskViewModel.updateWeight(id, weight);
             mTaskViewModel.updateType(id, type);
             mTaskViewModel.updateNotes(id, notes);
+            mTaskViewModel.updateColor(id, color);
         }
         else {
-            Toast.makeText(
-                    getActivity().getApplicationContext(),
-                    R.string.empty_not_saved,
-                    Toast.LENGTH_LONG).show();
+//            Toast.makeText(
+//                    getActivity().getApplicationContext(),
+//                    R.string.empty_not_saved,
+//                    Toast.LENGTH_LONG).show();
         }
     }
 

@@ -40,6 +40,8 @@ public class TaskViewModel extends AndroidViewModel {
 
     public void updateType(int taskID, String taskType) {mRepository.updateType(taskID, taskType);}
 
+    public void updateColor(int taskID, String taskColor) {mRepository.updateColor(taskID, taskColor);}
+
     public void updateNotes(int taskID, String taskNotes) {mRepository.updateNotes(taskID, taskNotes);}
 
     public void updateCompletionStatus(int taskID, boolean taskStatus) {mRepository.updateCompletionStatus(taskID, taskStatus);}

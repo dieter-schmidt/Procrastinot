@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -16,7 +17,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-@Database(entities = {Task.class, DayEntry.class}, version = 9, exportSchema = false)
+@Database(entities = {Task.class, DayEntry.class}, version = 14, exportSchema = false)
 public abstract class TaskRoomDatabase extends RoomDatabase {
 
     public abstract TaskDao taskDao();
@@ -94,7 +95,7 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
                         default:
                             weight = "Hard";
                     }
-                    Task task = new Task(tasks[i], weight, "Fitness", "Basic notes text.", CalendarConverter.fromCalendar(Calendar.getInstance()));
+                    Task task = new Task(tasks[i], weight, "Fitness", "Basic notes text.", CalendarConverter.fromCalendar(Calendar.getInstance()), "#F44336");
                     mTaskDao.insert(task);
                     Log.e("TEST", task.getDate());
                 }

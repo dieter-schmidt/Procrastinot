@@ -35,4 +35,13 @@
     <string name="datepicker">datePicker</string>
     <string name="change_date">Change Date</string>
     <string name="current_date">Current Date</string>
+
+    <string-array name="color_labels_array">
+        <item>Red</item>
+        <item>Purple</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Orange</item>
+    </string-array>
+
 </resources>

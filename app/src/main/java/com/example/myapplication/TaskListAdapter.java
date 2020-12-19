@@ -35,22 +35,26 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
         if (mTasks != null) {
             Task current = mTasks.get(position);
             holder.taskItemView.setText(current.getTask());
+            //convert from hex to int
+            holder.taskItemView.setBackgroundColor(Color.parseColor(current.getColor()));
             holder.typeItemView.setText(current.getType());
             //holder.notesItemView.setText(current.getNotes());
             bind(current, holder, listener);
             //change background color depending on weight
             Log.e("TEST", current.getWeight());
             Log.e("TEST", current.getDate());
-            if (current.getWeight().equals("Hard")) {
-                holder.taskItemView.setBackgroundColor(mInflater.getContext().getResources().getColor(R.color.colorTaskHard));
-            }
-            else if (current.getWeight().equals("Medium")){
-                holder.taskItemView.setBackgroundColor(mInflater.getContext().getResources().getColor(R.color.colorTaskMedium));
-            }
-            else if (current.getWeight().equals("Easy")) {
-                holder.taskItemView.setBackgroundColor(mInflater.getContext().getResources().getColor(R.color.colorTaskEasy));
-                holder.taskItemView.setTextColor(Color.BLACK);
-            }
+            Log.e("TEST", "type = "+current.getType());
+            Log.e("TEST", "color = "+current.getColor());
+//            if (current.getWeight().equals("Hard")) {
+//                holder.taskItemView.setBackgroundColor(mInflater.getContext().getResources().getColor(R.color.colorTaskHard));
+//            }
+//            else if (current.getWeight().equals("Medium")){
+//                holder.taskItemView.setBackgroundColor(mInflater.getContext().getResources().getColor(R.color.colorTaskMedium));
+//            }
+//            else if (current.getWeight().equals("Easy")) {
+//                holder.taskItemView.setBackgroundColor(mInflater.getContext().getResources().getColor(R.color.colorTaskEasy));
+//                holder.taskItemView.setTextColor(Color.BLACK);
+//            }
 
             if (current.getCompletionStatus() == true){
                 holder.checkBoxView.setChecked(true);

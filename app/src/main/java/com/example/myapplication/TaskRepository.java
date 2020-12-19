@@ -42,7 +42,12 @@ public class TaskRepository {
         new updateTypeAsyncTask(mTaskDao).execute(params);
         //mTaskDao.updateType(taskID, taskType);
     }
-
+    public void updateColor(int taskID, String taskColor)
+    {
+        UpdateParams params = new UpdateParams(taskID, taskColor);
+        new updateColorAsyncTask(mTaskDao).execute(params);
+        //mTaskDao.updateType(taskID, taskType);
+    }
     public void updateNotes(int taskID, String taskNotes)
     {
         UpdateParams params = new UpdateParams(taskID, taskNotes);
@@ -139,6 +144,7 @@ public class TaskRepository {
         int id;
         String sField;
         boolean bField;
+        int iField;
 
         UpdateParams(int id, String field) {
             this.id = id;
@@ -147,6 +153,10 @@ public class TaskRepository {
         UpdateParams(int id, boolean field) {
             this.id = id;
             this.bField = field;
+        }
+        UpdateParams(int id, int field) {
+            this.id = id;
+            this.iField = field;
         }
     }
 
@@ -216,6 +226,20 @@ public class TaskRepository {
         @Override
         protected Void doInBackground(final UpdateParams... params) {
             mAsyncTaskDao.updateType(params[0].id, params[0].sField);
+            return null;
+        }
+    }
+
+    private static class updateColorAsyncTask extends AsyncTask<UpdateParams, Void, Void> {
+        private TaskDao mAsyncTaskDao;
+
+        updateColorAsyncTask(TaskDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final UpdateParams... params) {
+            mAsyncTaskDao.updateColor(params[0].id, params[0].sField);
             return null;
         }
     }

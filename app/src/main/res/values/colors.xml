@@ -10,4 +10,14 @@
     <color name="colorTaskEasy">#FFFF00</color>
     <color name="colorTaskMedium">#FFAA00</color>
     <color name="colorTaskHard">#FF4000</color>
+
+    <string-array name="colors_array">
+        <item>#F44336</item>
+        <item>#9C27B0</item>
+        <item>#2196F3</item>
+        <item>#009688</item>
+        <item>#FF9800</item>
+    </string-array>
+
+
 </resources>

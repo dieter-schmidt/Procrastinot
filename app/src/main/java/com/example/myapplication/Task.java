@@ -35,10 +35,14 @@ public class Task {
     @ColumnInfo(name = "notes")
     private String mNotes;
 
+    @ColumnInfo(name = "color")
+    @NonNull
+    private String mColor;
+
     @ColumnInfo(name = "completion_status")
     private boolean mCompletionStatus;
 
-    public Task(@NonNull String task, String weight, String type, String notes, String date) {
+    public Task(@NonNull String task, String weight, String type, String notes, String date, String color) {
         this.mID = 0;
         this.mTask = task;
         this.mWeight = weight;
@@ -46,6 +50,7 @@ public class Task {
         this.mNotes = notes;
         this.mCompletionStatus = false;
         this.mDate = date;
+        this.mColor = color;
     }
 
     public void setCompletionStatus(boolean status){mCompletionStatus = status;}
@@ -54,6 +59,8 @@ public class Task {
 
     public void setDate(String date){mDate = date;}
 
+    public void setColor(String color){mColor = color;}
+
     public String getTask(){return this.mTask;}
 
     public String getWeight(){return this.mWeight;}
@@ -61,6 +68,8 @@ public class Task {
     public String getType(){return this.mType;}
 
     public String getNotes(){return this.mNotes;}
+
+    public String getColor() {return this.mColor;}
 
     public String getDate(){return this.mDate;}
 

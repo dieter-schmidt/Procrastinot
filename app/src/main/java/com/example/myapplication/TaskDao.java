@@ -42,6 +42,9 @@ public interface TaskDao {
     @Query("UPDATE task_table SET type = :taskType WHERE ID = :taskID")
     void updateType(int taskID, String taskType);
 
+    @Query("UPDATE task_table SET color = :taskColor WHERE ID = :taskID")
+    void updateColor(int taskID, String taskColor);
+
     @Query("UPDATE task_table SET notes = :taskNotes WHERE ID = :taskID")
     void updateNotes(int taskID, String taskNotes);
 
