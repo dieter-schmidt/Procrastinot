@@ -1,12 +1,14 @@
 package com.example.myapplication;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +38,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import android.media.MediaPlayer;
@@ -66,6 +71,8 @@ public class TaskFragment extends Fragment {
     public static final String EXTRA_ID = "com.example.android.twoactivities.extra.ID";
     public static final String EXTRA_NOTES = "com.example.android.twoactivities.extra.NOTES";
     public static final String EXTRA_COLOR = "com.example.android.twoactivities.extra.COLOR";
+
+    public static final String EXTRA_POPUP_TEXT = "com.example.android.twoactivities.extra.POPUP_TEXT";
 
     private Task editedTask;
     TaskListAdapter adapter;
@@ -151,8 +158,20 @@ public class TaskFragment extends Fragment {
                 startActivityForResult(intent, EDIT_TASK_ACTIVITY_REQUEST_CODE);
             }
             public void onNotesClick(Task task) {
-                Toast.makeText(getActivity().getApplicationContext(), task.getNotes(), Toast.LENGTH_LONG).show();
-                PopupWindow popup = new PopupWindow(50, 50);
+//                Toast.makeText(getActivity().getApplicationContext(), task.getNotes(), Toast.LENGTH_LONG).show();
+//                PopupWindow popup = new PopupWindow(getActivity());
+//                LayoutInflater inflater = (LayoutInflater) getActivity()
+//                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//                //Inflate the view from a predefined XML layout
+//                View layout = inflater.inflate(R.layout.popup_window, null);
+//                FrameLayout fl = layout.findViewById(R.id.popup_layout);
+//                popup.setContentView(layout);
+//                popup.setWidth(fl.getLayoutParams().width);
+//                popup.setHeight(fl.getLayoutParams().height);
+//                popup.showAtLocation(layout, Gravity.CENTER, 0,0);
+                Intent popupIntent = new Intent(getActivity(), Pop.class);
+                popupIntent.putExtra(EXTRA_POPUP_TEXT, task.getNotes());
+                startActivity(popupIntent);
             }
 
             @Override
